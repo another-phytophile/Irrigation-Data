@@ -30,8 +30,6 @@ OPTIONS SYMBOLGEN MPRINT MLOGIC;
 
 /*plotting graphs for datacleaning */
 
-title;
-
 %macro graphinit (VOI); 
 %do i = 1 %to &VOI;
       %let var_name = VWC_&i;
@@ -261,3 +259,47 @@ proc sgscatter data=Irrproj.MasterSASFileClean;
   plot (LCClean1_1 LCClean2_1 LCClean2_2 LCClean2_3 LCClean2_4 LCClean2_5 LCClean2_6 LCClean2_7 LCClean2_8 LCClean2_9 LCClean2_10 LCClean2_11 LCClean2_12 LCClean1_2 LCClean1_3 LCClean1_4 LCClean1_5 LCClean1_6 LCClean1_7 LCClean1_8 LCClean1_9 LCClean1_10 LCClean1_11 LCClean1_12)*(TIMESTAMP);
 run;
 ods graphics off;
+
+/*Sequence data by timestamp in case data is not
+ already sorted*/
+proc sort data = Irrproj.mastersasfileclean
+    nodupkey;
+  by TimeStamp;
+run;
+
+%macro renameVWC (count);
+    %DO I = 1 %TO &COUNT;
+    VWC&IClean = VWCClean&I
+    %end;
+%mend renameVWC;
+
+data Irrproj.mastersasfileclean;
+    set Irrproj.mastersasfileclean;
+    rename %renameVWC(1);
+run;
+
+/*Model
+ - Fit LOESS model 
+ - Score original data
+ - Save LOESS results 
+*/
+
+/*%macro LOESSVWC (VOI); */
+/*%do i = 1 %to &VOI;*/
+/*      %let var_name = VWC&iClean;*/
+/*proc loess data=Irrproj.mastersasfileclean plots=none;*/
+/*  model  &var_name  =TIMESTAMP/smooth = 0.0025;*/
+/*score;*/
+/*ods output ScoreResults=p&var_name  (drop = smoothingparameter scoredata);*/
+/*run;*/
+/*%end;*/
+/*%mend LOESSVWC; */
+/**/
+/*%LOESSVWC(1);*/
+/**/
+/*proc loess data=Irrproj.mastersasfileclean plots=none;*/
+/*  model  VWC1Clean  =TIMESTAMP/smooth = 0.0025;*/
+/*score;*/
+/*ods output ScoreResults=p1VWCClean1  (drop = smoothingparameter scoredata);*/
+/*run;*/
+
