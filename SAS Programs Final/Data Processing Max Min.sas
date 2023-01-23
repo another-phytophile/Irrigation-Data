@@ -1,11 +1,10 @@
 /*
-Authored By: Jonathan W. Duggins
+Authored By: Jerry, Yu Jonathan W. Duggins
 Authored On: 2022-11-28
-Authored To: 1) Adapt code written by Jerry Yu
-             2) Clean data
-             3) Fit LOESS to predict target variable based 
+Authored To: 1) Clean data
+             2) Fit LOESS to predict target variable based 
                 on TIMESTAMP
-             4) Find extrema in original data by:
+             3) Find extrema in original data by:
                 A) Transposing data so all observations are 
                    on one record
                 B) Search records for a sign change in the 
@@ -20,13 +19,13 @@ Change Logs:
 Modified By: Jerry Yu
 Modified On: 2022-12-2,3,4,5
 Modified To: 
-	1) Adapt code written by Dr. Duggins to fit for all 48 variables, both maxes and mins
-	2)use macros to reduce code space
+    1) Adapt code written by Dr. Duggins to fit for all 48 variables, both maxes and mins
+    2)use macros to reduce code space
 
 Modified By: Jerry Yu
 Modified On: 2022-12-16,17,18,19
 Modified To: 
-	1) Modify code to pick max extrema 30 minutes after the absolute data extrema
+    1) Modify code to pick max extrema 30 minutes after the absolute data extrema
 
 
 /*libname statement to access the irrigation folder*/
@@ -38,7 +37,7 @@ libname irrproj 'C:\Users\yujer\OneDrive\Documents\Github\Irrigation-Data' ;
 /*Sequence data by timestamp in case data is not
  already sorted*/
 proc sort data = Irrproj.mastersasfileclean
-	nodupkey;
+    nodupkey;
   by TimeStamp;
 run;
 
@@ -291,9 +290,9 @@ run;
 /*combine all the datasets into 1*/
 
 data Irrproj.LOESSResults ;
-	merge p1LCClean1_1 p1LCClean1_2 p1LCClean1_3 p1LCClean1_4 p1LCClean1_5 p1LCClean1_6 p1LCClean1_7 p1LCClean1_8 p1LCClean1_9 p1LCClean1_10 p1LCClean1_11 p1LCClean1_12 p1LCClean2_1 p1LCClean2_2 p1LCClean2_3 p1LCClean2_4 p1LCClean2_5 p1LCClean2_6 p1LCClean2_7 p1LCClean2_8 p1LCClean2_9 p1LCClean2_10 p1LCClean2_11 p1LCClean2_12
-	p1VWCClean1 p1VWCClean2 p1VWCClean3 p1VWCClean4 p1VWCClean5 p1VWCClean6 p1VWCClean7 p1VWCClean8 p1VWCClean9 p1VWCClean10 p1VWCClean11 p1VWCClean12 p1VWCClean13 p1VWCClean14 p1VWCClean15 p1VWCClean16 p1VWCClean17 p1VWCClean18 p1VWCClean19 p1VWCClean20 p1VWCClean21 p1VWCClean22 p1VWCClean23 p1VWCClean24;
-	by TIMESTAMP;
+    merge p1LCClean1_1 p1LCClean1_2 p1LCClean1_3 p1LCClean1_4 p1LCClean1_5 p1LCClean1_6 p1LCClean1_7 p1LCClean1_8 p1LCClean1_9 p1LCClean1_10 p1LCClean1_11 p1LCClean1_12 p1LCClean2_1 p1LCClean2_2 p1LCClean2_3 p1LCClean2_4 p1LCClean2_5 p1LCClean2_6 p1LCClean2_7 p1LCClean2_8 p1LCClean2_9 p1LCClean2_10 p1LCClean2_11 p1LCClean2_12
+    p1VWCClean1 p1VWCClean2 p1VWCClean3 p1VWCClean4 p1VWCClean5 p1VWCClean6 p1VWCClean7 p1VWCClean8 p1VWCClean9 p1VWCClean10 p1VWCClean11 p1VWCClean12 p1VWCClean13 p1VWCClean14 p1VWCClean15 p1VWCClean16 p1VWCClean17 p1VWCClean18 p1VWCClean19 p1VWCClean20 p1VWCClean21 p1VWCClean22 p1VWCClean23 p1VWCClean24;
+    by TIMESTAMP;
 run;
 
 /*Reshape to get all predicted values 
@@ -306,9 +305,9 @@ proc transpose data = Irrproj.LOESSResults
 run;
 
 /*data test1; */
-/*	set Irrproj.TransResults ;*/
-/*	if _NAME_ = "p_LCClean1_1" ;*/
-/*	drop _NAME_ _LABEL_;*/
+/*  set Irrproj.TransResults ;*/
+/*  if _NAME_ = "p_LCClean1_1" ;*/
+/*  drop _NAME_ _LABEL_;*/
 /*run;*/
 
 /*Locate the extrema*/
@@ -342,12 +341,12 @@ run;
 /*Check the data to see if the number of estimated minimums and maximums are reasonable*/
 /*preliminary sorting step*/
 proc sort data = Irrproj.Extrema;
-	by _NAME_;
+    by _NAME_;
 run;
 /*Checks frequency of maxs and mins for each variable*/
 proc freq data =Irrproj.Extrema;
-	by _NAME_;
-	tables type;
+    by _NAME_;
+    tables type;
 run;
 
 /*START OF MINS PROCESSING*/
@@ -397,7 +396,7 @@ OPTIONS SYMBOLGEN MPRINT MLOGIC;
 /*start of code*/
 proc sort data = Irrproj.Neighborhoodmin (where = (not missing(&VOI))) 
           out = &NSortmin;
-		  where _NAME_="&p";
+          where _NAME_="&p";
   by Extrema Type &VOI &p;
 run;
 
@@ -1309,7 +1308,7 @@ by TIMESTAMP;
 run;
 
 data Rawmaxes;
-	merge Irrproj.mastersasfileclean MaxresultsLCClean1_1 MaxresultsLCClean1_2 MaxresultsLCClean1_3 MaxresultsLCClean1_4 MaxresultsLCClean1_5 MaxresultsLCClean1_6 MaxresultsLCClean1_7 MaxresultsLCClean1_8 MaxresultsLCClean1_9 MaxresultsLCClean1_10 MaxresultsLCClean1_11 MaxresultsLCClean1_12 MaxresultsLCClean2_1 MaxresultsLCClean2_2 MaxresultsLCClean2_3 MaxresultsLCClean2_4 MaxresultsLCClean2_5 MaxresultsLCClean2_6 MaxresultsLCClean2_7 MaxresultsLCClean2_8 MaxresultsLCClean2_9 MaxresultsLCClean2_10 MaxresultsLCClean2_11 MaxresultsLCClean2_12
+    merge Irrproj.mastersasfileclean MaxresultsLCClean1_1 MaxresultsLCClean1_2 MaxresultsLCClean1_3 MaxresultsLCClean1_4 MaxresultsLCClean1_5 MaxresultsLCClean1_6 MaxresultsLCClean1_7 MaxresultsLCClean1_8 MaxresultsLCClean1_9 MaxresultsLCClean1_10 MaxresultsLCClean1_11 MaxresultsLCClean1_12 MaxresultsLCClean2_1 MaxresultsLCClean2_2 MaxresultsLCClean2_3 MaxresultsLCClean2_4 MaxresultsLCClean2_5 MaxresultsLCClean2_6 MaxresultsLCClean2_7 MaxresultsLCClean2_8 MaxresultsLCClean2_9 MaxresultsLCClean2_10 MaxresultsLCClean2_11 MaxresultsLCClean2_12
 MaxResultsVWCClean1
 MaxResultsVWCClean2
 MaxResultsVWCClean3
@@ -1460,7 +1459,7 @@ run;
 
 /*combine maximum and minimum numbers with original numbers*/
 data Irrproj.FinalResults;
-	merge Irrproj.mastersasfileclean CmaxLCClean1_1 CmaxLCClean1_2 CmaxLCClean1_3 CmaxLCClean1_4 CmaxLCClean1_5 CmaxLCClean1_6 CmaxLCClean1_7 CmaxLCClean1_8 CmaxLCClean1_9 CmaxLCClean1_10 CmaxLCClean1_11 CmaxLCClean1_12 CmaxLCClean2_1 CmaxLCClean2_2 CmaxLCClean2_3 CmaxLCClean2_4 CmaxLCClean2_5 CmaxLCClean2_6 CmaxLCClean2_7 CmaxLCClean2_8 CmaxLCClean2_9 CmaxLCClean2_10 CmaxLCClean2_11 CmaxLCClean2_12
+    merge Irrproj.mastersasfileclean CmaxLCClean1_1 CmaxLCClean1_2 CmaxLCClean1_3 CmaxLCClean1_4 CmaxLCClean1_5 CmaxLCClean1_6 CmaxLCClean1_7 CmaxLCClean1_8 CmaxLCClean1_9 CmaxLCClean1_10 CmaxLCClean1_11 CmaxLCClean1_12 CmaxLCClean2_1 CmaxLCClean2_2 CmaxLCClean2_3 CmaxLCClean2_4 CmaxLCClean2_5 CmaxLCClean2_6 CmaxLCClean2_7 CmaxLCClean2_8 CmaxLCClean2_9 CmaxLCClean2_10 CmaxLCClean2_11 CmaxLCClean2_12
 CmaxVWCClean1
 CmaxVWCClean2
 CmaxVWCClean3
@@ -1509,8 +1508,8 @@ MinResultsVWCClean21 MinResultsLCClean2_9
 MinResultsVWCClean22 MinResultsLCClean2_10
 MinResultsVWCClean23 MinResultsLCClean2_11
 MinResultsVWCClean24 MinResultsLCClean2_12
-	;
-	by TIMESTAMP;
+    ;
+    by TIMESTAMP;
 run;
 
 /*remove duplicated data*/
@@ -1524,7 +1523,7 @@ quit;
 /*Check results of program with a scatterplot*/
 title "Minimum Points For Data";
 ODS GRAPHICS on/
-	width=30in;
+    width=30in;
 /*Macro for making graphing easier*/
 /*start of min graphs*/
 %macro plots (VOI);
