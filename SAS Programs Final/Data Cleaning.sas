@@ -21,8 +21,10 @@ dm 'log;clear;output;clear;';
 /*clear previous output*/
 dm 'odsresults; clear';
 
+x 'cd C:\Users\yujer\OneDrive\Documents\Github\Irrigation-Data\SAS Data Sets';
+
 /*create library for data*/
-libname irrproj 'C:\Users\yujer\OneDrive\Documents\Github\Irrigation-Data\SAS Data Sets';
+libname irrproj '.';
 
 
 /*for better ease for debugging*/

@@ -1,5 +1,5 @@
 /*
-Authored By: Jerry, Yu Jonathan W. Duggins
+Authored By: Jerry, Yu
 Authored On: 2022-11-28
 Authored To: 1) Clean data
              2) Fit LOESS to predict target variable based 
@@ -13,6 +13,7 @@ Authored To: 1) Clean data
                    within neighborhood of LOESS extrema
                 D) Find original data extrema within each 
                    neighborhood of LOESS extrema
+              4) Rewrite the code written by Jonathan W. Duggins to apply to all variables
 
 Change Logs: 
 
@@ -32,7 +33,7 @@ Modified To:
 /*ods output off;*/
 /*ods graphics / reset;*/
 
-libname irrproj 'C:\Users\yujer\OneDrive\Documents\Github\Irrigation-Data' ;
+libname irrproj 'C:\Users\yujer\OneDrive\Documents\Github\Irrigation-Data\SAS Data Sets';
 
 /*Sequence data by timestamp in case data is not
  already sorted*/
@@ -353,7 +354,7 @@ run;
 
 /*Find original records that are 
   within D spots of extrema*/
-data Irrproj.Neighborhoodmin(drop = nbrhood d);
+data Neighborhoodmin(drop = nbrhood d);
   *Only bring in records of the extrema type we want;
   set Irrproj.Extrema(where = (lowcase(type) = "min"));
 
@@ -394,7 +395,7 @@ OPTIONS SYMBOLGEN MPRINT MLOGIC;
 %let MinResults =MinResults%sysfunc(tranwrd(&VOI,%str( ),%str(MinResults)));
 %let min =min%sysfunc(tranwrd(&VOI,%str( ),%str(min)));
 /*start of code*/
-proc sort data = Irrproj.Neighborhoodmin (where = (not missing(&VOI))) 
+proc sort data = Neighborhoodmin (where = (not missing(&VOI))) 
           out = &NSortmin;
           where _NAME_="&p";
   by Extrema Type &VOI &p;
@@ -513,7 +514,7 @@ run;
 
 /*Find original records that are 
   within D spots of extrema*/
-data Irrproj.Neighborhoodmax(drop = nbrhood d);
+data Neighborhoodmax(drop = nbrhood d);
   *Only bring in records of the extrema type we want;
   set Irrproj.Extrema(where = (lowcase(type) = "max"));
 
@@ -537,7 +538,7 @@ run;
 
 /*Sort Steps for  LCClean1_1 */
 
-proc sort data = Irrproj.Neighborhoodmax (where = (not missing( LCClean1_1 ))) 
+proc sort data = Neighborhoodmax (where = (not missing( LCClean1_1 ))) 
           out =  NSortmaxLCClean1_1 ;
   where _NAME_="p_LCClean1_1";
   by descending Extrema descending Type descending LCClean1_1  descending p_LCClean1_1 ;
