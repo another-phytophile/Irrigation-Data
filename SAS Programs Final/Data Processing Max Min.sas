@@ -168,7 +168,7 @@ score;
 ods output ScoreResults=p1VWCClean12  (drop = smoothingparameter scoredata);
 run;
 proc loess data=Irrproj.mastersasfileclean plots=none;
-  model  VWCClean13  =TIMESTAMP/smooth = 0.0025;
+  model  VWC13Clean  =TIMESTAMP/smooth = 0.0025;
 score;
 ods output ScoreResults=p1VWCClean13  (drop = smoothingparameter scoredata);
 run;

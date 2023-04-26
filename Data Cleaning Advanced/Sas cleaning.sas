@@ -16,7 +16,7 @@ x ' cd C:\Users\yujer\OneDrive\Documents\Github\Irrigation-Data\Data Cleaning Ad
 libname Results '.';
 
 x 'cd C:\Users\yujer\OneDrive\Documents\Github\Irrigation-Data\Data Cleaning Advanced\Raw Data Sets';
-filename RawData ".\Whole crop water use analysis zone by zone (for Jerry).xlsx";
+filename RawData ".\Irrproj.updatedfinalresults (1).xlsx";
 
 /*import Whole crop water use analysis zone by zone(for Jerry)*/
 proc import datafile="RawData"
@@ -27,6 +27,15 @@ proc import datafile="RawData"
   range= "A2:BC";
 run;
 
+
+/*import Whole crop water use analysis zone by zone(for Jerry)*/
+proc import datafile="RawData"
+  out = Irrproj.mastersasfileclean
+  DBMS = xlsx
+  replace;
+  sheet="Irrproj.updatedfinalresults";
+  range= "A2:ER";
+run;
 %macro test(voi);
 data test&voi;
   set Results.RawSasminmax;

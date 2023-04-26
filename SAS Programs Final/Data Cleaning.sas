@@ -1,7 +1,7 @@
 /*Authored By: Jerry Yu*/
 /*Authored On: 2023-1-07*/
 /*Authored To: 1) Adapt previous versions of the program into 1 final version*/
-/*             2) Clean data*/
+/*             2)   data*/
 /*             3) Fit LOESS to predict target variable based */
 /*                on TIMESTAMP*/
 /*             4) Find extrema in original data by:*/
@@ -30,7 +30,7 @@ libname irrproj '.';
 /*for better ease for debugging*/
 OPTIONS SYMBOLGEN MPRINT MLOGIC;
 
-/*plotting graphs for datacleaning */
+/*plotting graphs for data ing */
 
 title;
 
@@ -67,129 +67,129 @@ run;
 
 %loadcell1graph (12);
 
-/*datacleaning*/
-data Irrproj.MasterSASFileClean;
+/*data ing*/
+data Irrproj.MasterSASFileClean ;
     set Irrproj.Mastersasfile;
 
-    length VWC1Clean 8;
-    if VWC_1 < 25 then VWC1Clean = ".";
-    else if VWC_1> 47 then VWC1Clean = ".";
-    else VWC1Clean =  VWC_1*1;
+    length VWCClean1  8;
+    if VWC_1 < 25 then VWCClean1  = ".";
+    else if VWC_1> 47 then VWCClean1  = ".";
+    else VWCClean1  =  VWC_1*1;
 
-    length VWC2Clean 8;
-    if VWC_2 < 25 then VWC2Clean = ".";
-    else if VWC_2> 55 then VWC2Clean = ".";
-    else VWC2Clean =  VWC_2*1;
+    length VWCClean2  8;
+    if VWC_2 < 25 then VWCClean2  = ".";
+    else if VWC_2> 55 then VWCClean2  = ".";
+    else VWCClean2  =  VWC_2*1;
 
-    length VWC3Clean 8;
-    if VWC_3 < 25 then VWC3Clean = ".";
-    else if VWC_3> 49 then VWC3Clean = ".";
-    else VWC3Clean =  VWC_3*1;
+    length VWCClean3  8;
+    if VWC_3 < 25 then VWCClean3  = ".";
+    else if VWC_3> 49 then VWCClean3  = ".";
+    else VWCClean3  =  VWC_3*1;
 
-    length VWC4Clean 8;
-    if VWC_4 < 25 then VWC4Clean = ".";
-    else if VWC_4> 49 then VWC4Clean = ".";
-    else VWC4Clean =  VWC_4*1;
+    length VWCClean4  8;
+    if VWC_4 < 25 then VWCClean4  = ".";
+    else if VWC_4> 49 then VWCClean4  = ".";
+    else VWCClean4  =  VWC_4*1;
 
-    length VWC5Clean 8;
-    if VWC_5 < 27 then VWC5Clean = ".";
-    else if VWC_5> 52 then VWC5Clean = ".";
-    else VWC5Clean =  VWC_5*1;
+    length VWCClean5  8;
+    if VWC_5 < 27 then VWCClean5  = ".";
+    else if VWC_5> 52 then VWCClean5  = ".";
+    else VWCClean5  =  VWC_5*1;
 
-    length VWC6Clean 8;
-    if VWC_6 < 31 then VWC6Clean = ".";
-    else if VWC_6> 55 then VWC6Clean = ".";
-    else VWC6Clean =  VWC_6*1;
+    length VWCClean6  8;
+    if VWC_6 < 31 then VWCClean6  = ".";
+    else if VWC_6> 55 then VWCClean6  = ".";
+    else VWCClean6  =  VWC_6*1;
 
-    length VWC7Clean 8;
-    if VWC_7 < 30 then VWC7Clean = ".";
-    else if VWC_7> 52 then VWC7Clean = ".";
-    else VWC7Clean =  VWC_7*1;
+    length VWCClean7  8;
+    if VWC_7 < 30 then VWCClean7  = ".";
+    else if VWC_7> 52 then VWCClean7  = ".";
+    else VWCClean7  =  VWC_7*1;
 
-    length VWC8Clean 8;
-    if VWC_8 < 30 then VWC8Clean = ".";
-    else if VWC_8> 47 then VWC8Clean = ".";
-    else VWC8Clean =  VWC_8*1;
+    length VWCClean8  8;
+    if VWC_8 < 30 then VWCClean8  = ".";
+    else if VWC_8> 47 then VWCClean8  = ".";
+    else VWCClean8  =  VWC_8*1;
 
-    length VWC9Clean 8;
-    if VWC_9 < 29 then VWC9Clean = ".";
-    else if VWC_9> 58 then VWC9Clean = ".";
-    else VWC9Clean =  VWC_9*1;
+    length VWCClean9  8;
+    if VWC_9 < 29 then VWCClean9  = ".";
+    else if VWC_9> 58 then VWCClean9  = ".";
+    else VWCClean9  =  VWC_9*1;
 
-    length VWC10Clean 8;
-    if VWC_10 < 25 then VWC10Clean = ".";
-    else if VWC_10> 48 then VWC10Clean = ".";
-    else VWC10Clean =  VWC_10*1;
+    length VWCClean10  8;
+    if VWC_10 < 25 then VWCClean10  = ".";
+    else if VWC_10> 48 then VWCClean10  = ".";
+    else VWCClean10  =  VWC_10*1;
 
-    length VWC11Clean 8;
-    if VWC_11 < 30 then VWC11Clean = ".";
-    else if VWC_11> 50 then VWC11Clean = ".";
-    else VWC11Clean =  VWC_11*1;
+    length VWCClean11  8;
+    if VWC_11 < 30 then VWCClean11  = ".";
+    else if VWC_11> 50 then VWCClean11  = ".";
+    else VWCClean11  =  VWC_11*1;
 
-    length VWC12Clean 8;
-    if VWC_12 < 30 then VWC12Clean = ".";
-    else if VWC_12> 50 then VWC12Clean = ".";
-    else VWC12Clean =  VWC_12*1;
+    length VWCClean12  8;
+    if VWC_12 < 30 then VWCClean12  = ".";
+    else if VWC_12> 50 then VWCClean12  = ".";
+    else VWCClean12  =  VWC_12*1;
 
-    length VWC13Clean 8;
-    if VWC_13 < 25 then VWC13Clean = ".";
-    else if VWC_13> 47 then VWC13Clean = ".";
-    else VWC13Clean =  VWC_13*1;
+    length VWCClean13  8;
+    if VWC_13 < 25 then VWCClean13  = ".";
+    else if VWC_13> 47 then VWCClean13  = ".";
+    else VWCClean13  =  VWC_13*1;
 
-    length VWC14Clean 8;
-    if VWC_14 < 25 then VWC14Clean = ".";
-    else if VWC_14> 50 then VWC14Clean = ".";
-    else VWC14Clean =  VWC_14*1;
+    length VWCClean14  8;
+    if VWC_14 < 25 then VWCClean14  = ".";
+    else if VWC_14> 50 then VWCClean14  = ".";
+    else VWCClean14  =  VWC_14*1;
 
-    length VWC15Clean 8;
-    if VWC_15 < 26 then VWC15Clean = ".";
-    else if VWC_15> 55 then VWC15Clean = ".";
-    else VWC15Clean =  VWC_15*1;
+    length VWCClean15  8;
+    if VWC_15 < 26 then VWCClean15  = ".";
+    else if VWC_15> 55 then VWCClean15  = ".";
+    else VWCClean15  =  VWC_15*1;
 
-    length VWC16Clean 8;
-    if VWC_16 < 28 then VWC16Clean = ".";
-    else if VWC_16> 53 then VWC16Clean = ".";
-    else VWC16Clean =  VWC_16*1;
+    length VWCClean16  8;
+    if VWC_16 < 28 then VWCClean16  = ".";
+    else if VWC_16> 53 then VWCClean16  = ".";
+    else VWCClean16  =  VWC_16*1;
 
-    length VWC17Clean 8;
-    if VWC_17 < 30 then VWC17Clean = ".";
-    else if VWC_17> 53 then VWC17Clean = ".";
-    else VWC17Clean =  VWC_17*1;
+    length VWCClean17  8;
+    if VWC_17 < 30 then VWCClean17  = ".";
+    else if VWC_17> 53 then VWCClean17  = ".";
+    else VWCClean17  =  VWC_17*1;
 
-    length VWC18Clean 8;
-    if VWC_18 < 30 then VWC18Clean = ".";
-    else if VWC_18> 52 then VWC18Clean = ".";
-    else VWC18Clean =  VWC_18*1;
+    length VWCClean18  8;
+    if VWC_18 < 30 then VWCClean18  = ".";
+    else if VWC_18> 52 then VWCClean18  = ".";
+    else VWCClean18  =  VWC_18*1;
 
-    length VWC19Clean 8;
-    if VWC_19 < 30 then VWC19Clean = ".";
-    else if VWC_19> 50 then VWC19Clean = ".";
-    else VWC19Clean =  VWC_19*1;
+    length VWCClean19  8;
+    if VWC_19 < 30 then VWCClean19  = ".";
+    else if VWC_19> 50 then VWCClean19  = ".";
+    else VWCClean19  =  VWC_19*1;
 
-    length VWC20Clean 8;
-    if VWC_20 < 30 then VWC20Clean = ".";
-    else if VWC_20> 55 then VWC20Clean = ".";
-    else VWC20Clean =  VWC_20*1;
+    length VWCClean20  8;
+    if VWC_20 < 30 then VWCClean20  = ".";
+    else if VWC_20> 55 then VWCClean20  = ".";
+    else VWCClean20  =  VWC_20*1;
 
-    length VWC21Clean 8;
-    if VWC_21 < 28 then VWC21Clean = ".";
-    else if VWC_21> 55 then VWC21Clean = ".";
-    else VWC21Clean =  VWC_21*1;
+    length VWCClean21  8;
+    if VWC_21 < 28 then VWCClean21  = ".";
+    else if VWC_21> 55 then VWCClean21  = ".";
+    else VWCClean21  =  VWC_21*1;
 
-    length VWC22Clean 8;
-    if VWC_22 < 24 then VWC22Clean = ".";
-    else if VWC_22> 51 then VWC22Clean = ".";
-    else VWC22Clean =  VWC_22*1;
+    length VWCClean22  8;
+    if VWC_22 < 24 then VWCClean22  = ".";
+    else if VWC_22> 51 then VWCClean22  = ".";
+    else VWCClean22  =  VWC_22*1;
 
-    length VWC23Clean 8;
-    if VWC_23 < 30 then VWC23Clean = ".";
-    else if VWC_23> 50 then VWC23Clean = ".";
-    else VWC23Clean =  VWC_23*1;
+    length VWCClean23  8;
+    if VWC_23 < 30 then VWCClean23  = ".";
+    else if VWC_23> 50 then VWCClean23  = ".";
+    else VWCClean23  =  VWC_23*1;
 
-    length VWC24Clean 8;
-    if VWC_24 < 30 then VWC24Clean = ".";
-    else if VWC_24> 50 then VWC24Clean = ".";
-    else VWC24Clean =  VWC_24*1;
+    length VWCClean24  8;
+    if VWC_24 < 30 then VWCClean24  = ".";
+    else if VWC_24> 50 then VWCClean24  = ".";
+    else VWCClean24  =  VWC_24*1;
 
     length LCClean1_1 8;
     if Load_Cells_1_1 < 5 then LCClean1_1 = ".";
@@ -246,19 +246,19 @@ Load_Cells_1_7
 Load_Cells_1_8 Load_Cells_1_9 Load_Cells_1_10 Load_Cells_1_11 Load_Cells_1_12;
 run;
 
-/*creating scatterplots to check if the datacleaning was successful*/
+/*creating scatterplots to check if the data ing was successful*/
 
 ODS GRAPHICS on/
     width=20in;
 ods graphics on / height=40in;
-proc sgscatter data=Irrproj.MasterSASFileClean;
-  title "all vwcs";
-  plot (VWC1Clean VWC2Clean VWC3Clean VWC4Clean VWC5Clean VWC6Clean VWC7Clean VWC8Clean VWC9Clean VWC10Clean 
-        VWC11Clean VWC12Clean VWC13Clean VWC14Clean VWC15Clean VWC16Clean VWC17Clean VWC18Clean VWC19Clean VWC20Clean
-         VWC21Clean VWC22Clean VWC23Clean VWC24Clean)*(TIMESTAMP);
+proc sgscatter data=Irrproj.MasterSASFile ;
+  title "all VWCCleans";
+  plot (VWCClean1  VWCClean2  VWCClean3  VWCClean4  VWCClean5  VWCClean6  VWCClean7  VWCClean8  VWCClean9  VWCClean10  
+        VWCClean11  VWCClean12  VWCClean13  VWCClean14  VWCClean15  VWCClean16  VWCClean17  VWCClean18  VWCClean19  VWCClean20 
+         VWCClean21  VWCClean22  VWCClean23  VWCClean24 )*(TIMESTAMP);
 run;
 
-proc sgscatter data=Irrproj.MasterSASFileClean;
+proc sgscatter data=Irrproj.MasterSASFile ;
   title "all LCs";
   plot (LCClean1_1 LCClean2_1 LCClean2_2 LCClean2_3 LCClean2_4 LCClean2_5 LCClean2_6 LCClean2_7 LCClean2_8 LCClean2_9 LCClean2_10 LCClean2_11 LCClean2_12 LCClean1_2 LCClean1_3 LCClean1_4 LCClean1_5 LCClean1_6 LCClean1_7 LCClean1_8 LCClean1_9 LCClean1_10 LCClean1_11 LCClean1_12)*(TIMESTAMP);
 run;
